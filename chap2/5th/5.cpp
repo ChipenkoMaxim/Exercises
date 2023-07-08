@@ -14,7 +14,7 @@ int upperCaseDecode(int numb) {
         return 2;
     }
 
-    cout << (char)(processedNumb + 64);
+    cout << (char)(processedNumb + 64); // processedNumb + ('A' - 1);
     return 1;
 }
 
@@ -24,7 +24,7 @@ int lowerCaseDecode(int numb) {
         return 3;
     }
 
-    cout << (char)(processedNumb + 96);
+    cout << (char)(processedNumb + 96);// processedNumb + ('a' - 1);
     return 2;
 }
 
