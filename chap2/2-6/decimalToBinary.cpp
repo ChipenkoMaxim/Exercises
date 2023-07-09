@@ -2,14 +2,11 @@
 
 using namespace std;
 
-void DecimalToBinary(int numb) {
+int DecimalToBinary(int numb) {
     if(numb / 2 == 0) {
-    cout << numb % 2;
-    return;
+    return numb % 2;
     }
-   DecimalToBinary(numb / 2);
-   cout << numb % 2;
-   return;
+   return 10 * DecimalToBinary(numb / 2) + numb % 2;
 }
 
 
@@ -21,6 +18,7 @@ int main() {
         digit = cin.get();
     }
 
-    DecimalToBinary(numb);
+    int result = DecimalToBinary(numb);
+    cout << result << "\n";
     return 0;
 }
