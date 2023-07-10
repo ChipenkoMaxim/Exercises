@@ -5,8 +5,8 @@ using namespace std;
 
 int main() {
 
-    int ARR_SIZE = 10;
-    int sourceArray[ARR_SIZE] = {1, 5, 3, 2, 1, 1, 3, 5, 4 ,3};
+    int ARR_SIZE = 12;
+    int sourceArray[ARR_SIZE] = {4, 7, 3, 8, 9, 7, 3, 9, 9, 3, 3, 10};
     int modeArray[ARR_SIZE];
     for(int i = 0; i < ARR_SIZE; i++) modeArray[i] = 0;
 
@@ -17,9 +17,9 @@ int main() {
     int maxElem = 0;
     int countOfMaxElem = 0;
     for(int i = 0; i < ARR_SIZE; i++) {
-        if(modeArray[i] > countOfMaxElem) {
+        if(modeArray[i] > i + 1) {
             countOfMaxElem = modeArray[i];
-            maxElem = modeArray[i];
+            maxElem = i + 1;
         }
     }
 
