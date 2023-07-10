@@ -14,10 +14,10 @@ int main() {
         modeArray[sourceArray[i] - 1] += 1;
     }
 
-    int maxElem = 0;
+    int maxElem = 1;
     int countOfMaxElem = 0;
     for(int i = 0; i < ARR_SIZE; i++) {
-        if(modeArray[i] > i + 1) {
+        if(modeArray[i] > modeArray[maxElem - 1]) {
             countOfMaxElem = modeArray[i];
             maxElem = i + 1;
         }
