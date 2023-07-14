@@ -3,11 +3,11 @@
 using namespace std;
 
 
-struct student {
+typedef struct{
     int grade;
     int studentID;
-    string name;
-};
+    char name[20];
+} student;
 
 void printArray(student* arr, const int arrSize) {
     cout << "\n";
@@ -15,6 +15,21 @@ void printArray(student* arr, const int arrSize) {
         cout << "Grade = " << arr[i].grade << ", ID = " << arr[i].studentID << ", Name = " << arr[i].name << endl;
     }
 }
+
+int gradeComparator(const void* fist, const void* second) {
+    student* A = (student*)(fist);
+    student* B = (student*)(second);
+
+    return (A->grade - B->grade);
+}
+
+int idComparator(const void* fist, const void* second) {
+    student* A = (student*)(fist);
+    student* B = (student*)(second);
+
+    return A->studentID - B->studentID;
+}
+
 
 int main() {
     const int ARRAY_SIZE = 10;
@@ -33,5 +48,7 @@ int main() {
 
     printArray(studentArray, ARRAY_SIZE);
 
+    qsort(studentArray, ARRAY_SIZE, sizeof(studentArray[0]), gradeComparator);
+    printArray(studentArray, ARRAY_SIZE);
     return 0;
 }
