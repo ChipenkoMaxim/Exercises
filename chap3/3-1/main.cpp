@@ -14,6 +14,7 @@ void printArray(student* arr, const int arrSize) {
     for(int i = 0; i < arrSize; i++) {
         cout << "Grade = " << arr[i].grade << ", ID = " << arr[i].studentID << ", Name = " << arr[i].name << endl;
     }
+    cout << "\n";
 }
 
 int gradeComparator(const void* fist, const void* second) {
@@ -46,9 +47,15 @@ int main() {
         {68, 10010, "Veronica"}
     };
 
+    cout << "Unsorted array:";
     printArray(studentArray, ARRAY_SIZE);
 
-    qsort(studentArray, ARRAY_SIZE, sizeof(studentArray[0]), gradeComparator);
+    cout << "Sorted by grade:";
+    qsort(studentArray, ARRAY_SIZE, sizeof(student), gradeComparator);
+    printArray(studentArray, ARRAY_SIZE);
+
+    cout << "Sorted by ID: ";
+    qsort(studentArray, ARRAY_SIZE, sizeof(student), idComparator);
     printArray(studentArray, ARRAY_SIZE);
     return 0;
 }
