@@ -4,7 +4,9 @@
 using namespace std;
 
 const int CYPHER_LETTERS_SIZE = 26;
-const char CYPHER_LETTERS[CYPHER_LETTERS_SIZE] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+	//ABCDEFGHIJKLMNOPQRSTUVWXYZ
+const char PLAIN_ALPHABET[CYPHER_LETTERS_SIZE] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+const char CYPHER_LETTERS[CYPHER_LETTERS_SIZE] = {'N', 'B', 'A', 'J', 'Y', 'F', 'O', 'W', 'L', 'Z', 'M', 'P', 'X', 'I', 'K', 'U', 'V', 'C', 'D', 'E', 'G', 'R', 'Q', 'S', 'T', 'H'};
 
 void printMessage(vector<char> message) {
     for(int i = 0; i < message.size(); i++) {
@@ -16,7 +18,7 @@ void printMessage(vector<char> message) {
 int findLetterIndex(char letter) {
     int index = -1;
     for(int i = 0; i < CYPHER_LETTERS_SIZE; i++) {
-        if(CYPHER_LETTERS[i] == letter) {
+        if(PLAIN_ALPHABET[i] == letter) {
             index = i;
             break;
         }
@@ -28,11 +30,9 @@ int findLetterIndex(char letter) {
 void cypherMessage(vector<char>* message) {
     for(int i = 0; i < (*message).size(); i++) {
         int index = findLetterIndex((*message)[i]);
-        if(index == -1) {continue;}
-        (*message)[i] = CYPHER_LETTERS[(index + 10) % 26];
-        // index = findLetterIndex((*message)[i]);
-        // if(index - 10 < 0) { (*message)[i] = CYPHER_LETTERS[(26 - abs(index - 10)) % 26];}
-        // else {(*message)[i] = CYPHER_LETTERS[(index - 10) % 26];}
+        if (index == -1) {continue;}
+        (*message)[i] = CYPHER_LETTERS[index];
+        //(*message)[i] = PLAIN_ALPHABET[(*message)[i] - 65];
     }
 }
 
