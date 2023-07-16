@@ -2,6 +2,11 @@
 
 using namespace std;
 
+// Write a bool function that is passed an array and the number of elements in
+// that array and determines whether the data in the array is sorted. This should
+// require only one pass!
+
+
 bool isSortedByIncreasingOrder(int* arr, int num) {
     for(int i = 0; i < num - 1; i++) {
         if(arr[i] > arr[i + 1]) {

@@ -3,6 +3,10 @@
 
 using namespace std;
 
+// Have the previous program convert the ciphertext back to the plaintext to
+// verify the encoding and decoding.
+
+
 const int CIPHER_LETTERS_SIZE = 26;
 const char PLAIN_ALPHABET[CIPHER_LETTERS_SIZE] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 const char CIPHER_LETTERS[CIPHER_LETTERS_SIZE] = {'N', 'B', 'A', 'J', 'Y', 'F', 'O', 'W', 'L', 'Z', 'M', 'P', 'X', 'I', 'K', 'U', 'V', 'C', 'D', 'E', 'G', 'R', 'Q', 'S', 'T', 'H'};

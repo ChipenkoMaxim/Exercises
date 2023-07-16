@@ -3,6 +3,10 @@
 using namespace std;
 
 
+// Write a program that is given an array of integers and determines the mode,
+// which is the number that appears most frequently in the array.
+
+
 void printArray(vector<int> arr) {
     for(int i = 0; i < arr.size(); i++) {
         cout << arr[i] << " ";

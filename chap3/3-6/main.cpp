@@ -5,6 +5,14 @@
 
 using namespace std;
 
+// To make the ciphertext problem even more challenging, have your pro-
+// gram randomly generate the cipher array instead of a hard-coded const array.
+// Effectively, this means placing a random character in each element of the
+// array, but remember that you can’t substitute a letter for itself. So the first
+// element can’t be A, and you can’t use the same letter for two substitutions—
+// that is, if the first element is S, no other element can be S.
+
+
 const int CIPHER_LETTERS_SIZE = 26;
 const char PLAIN_ALPHABET[CIPHER_LETTERS_SIZE] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 char CIPHER_ALPHABET[CIPHER_LETTERS_SIZE];

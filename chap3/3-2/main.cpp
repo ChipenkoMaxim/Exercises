@@ -2,6 +2,16 @@
 
 using namespace std;
 
+// Rewrite the code that finds the agent with the best monthly sales average so
+// that it finds the agent with the highest median sales. As stated earlier, the median
+// of a set of values is the “one in the middle,” such that half of the other values
+// are higher and half of the other values are lower. If there is an even number
+// of values, the median is the simple average of the two values in the middle.
+// For example, in the set 10, 6, 2, 14, 7, 9, the values in the middle are 7 and 9.
+// The average of 7 and 9 is 8, so 8 is the median.
+
+
+
 struct agent {
     int numOfMonthlySales = 0;
     int* monthlySales = NULL;
