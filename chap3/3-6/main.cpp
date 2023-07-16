@@ -31,13 +31,27 @@ void swap(char* arr, int firstI, int secondI) {
 }
 
 
-void createCipherAlphabet() {
-    //Shuffle plain alphabet and check if letter in plain alph doent match with ciphered on the same position
-    initAlphabet(CIPHER_ALPHABET);
-    //printAlphabet(CIPHER_ALPHABET);
+void shuffle(char* arr) {
     for(int i = CIPHER_LETTERS_SIZE - 1; i > 0; i--) {
         int j = generateRandNum(i);
         swap(CIPHER_ALPHABET, i, j);
+    }
+}
+
+bool isDifferentFromPlain(char* arr) {
+    for(int i = 0; i < CIPHER_LETTERS_SIZE; i++) {
+        if(arr[i] == PLAIN_ALPHABET[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void createCipherAlphabet() {
+    //Shuffle plain alphabet and check if letter in plain alph doent match with ciphered on the same position
+    initAlphabet(CIPHER_ALPHABET);
+    while(isDifferentFromPlain(CIPHER_ALPHABET)) {
+        shuffle(CIPHER_ALPHABET);
     }
 }
 
@@ -45,6 +59,9 @@ void createCipherAlphabet() {
 int main() {
     srand(time(NULL));
     createCipherAlphabet();
+    cout << "P Alphabet: ";
+    printAlphabet(PLAIN_ALPHABET);
+    cout << "C Alphabet: ";
     printAlphabet(CIPHER_ALPHABET);
     return 0;
 }
