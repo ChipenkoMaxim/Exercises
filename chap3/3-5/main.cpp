@@ -25,6 +25,17 @@ int findCipherLetterIndex(char letter) {
     return index;
 }
 
+int findOriginalLetterIndex(char letter) {
+    int index = -1;
+    for(int i = 0; i < CIPHER_LETTERS_SIZE; i++) {
+        if(CIPHER_LETTERS[i] == letter) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
 
 void cipherMessage(vector<char>* message) {
     for(int i = 0; i < (*message).size(); i++) {
@@ -34,6 +45,13 @@ void cipherMessage(vector<char>* message) {
     }
 }
 
+void decipherMessage(vector<char>* message) {
+      for(int i = 0; i < (*message).size(); i++) {
+        int index = findOriginalLetterIndex((*message)[i]);
+        if (index == -1) {continue;}
+        (*message)[i] = PLAIN_ALPHABET[index];
+    }
+}
 
 int main() {
     vector<char> message;
@@ -53,5 +71,10 @@ int main() {
     cipherMessage(&message);
     cout << "Cyphered message is: ";
     printMessage(message);
+
+    cout << "Deciphered message is: ";
+    decipherMessage(&message);
+    printMessage(message);
+
     return 0;
 }
