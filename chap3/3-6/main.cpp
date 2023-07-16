@@ -1,11 +1,20 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
+
 
 using namespace std;
 
 const int CIPHER_LETTERS_SIZE = 26;
 const char PLAIN_ALPHABET[CIPHER_LETTERS_SIZE] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 char CIPHER_ALPHABET[CIPHER_LETTERS_SIZE];
+
+void printMessage(vector<char> message) {
+    for(int i = 0; i < message.size(); i++) {
+        cout << message[i];
+    }
+    cout << "\n";
+}
 
 void printAlphabet(const char* arr) {
     for(int i = 0; i < CIPHER_LETTERS_SIZE; i++) {
@@ -47,6 +56,46 @@ bool isDifferentFromPlain(char* arr) {
     return false;
 }
 
+int findCipherLetterIndex(char letter) {
+    int index = -1;
+    for(int i = 0; i < CIPHER_LETTERS_SIZE; i++) {
+        if(PLAIN_ALPHABET[i] == letter) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+int findOriginalLetterIndex(char letter) {
+    int index = -1;
+    for(int i = 0; i < CIPHER_LETTERS_SIZE; i++) {
+        if(CIPHER_ALPHABET[i] == letter) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+
+void cipherMessage(vector<char>* message) {
+    for(int i = 0; i < (*message).size(); i++) {
+        int index = findCipherLetterIndex((*message)[i]);
+        if (index == -1) {continue;}
+        (*message)[i] = CIPHER_ALPHABET[index];
+    }
+}
+
+void decipherMessage(vector<char>* message) {
+      for(int i = 0; i < (*message).size(); i++) {
+        int index = findOriginalLetterIndex((*message)[i]);
+        if (index == -1) {continue;}
+        (*message)[i] = PLAIN_ALPHABET[index];
+    }
+}
+
+
 void createCipherAlphabet() {
     //Shuffle plain alphabet and check if letter in plain alph doent match with ciphered on the same position
     initAlphabet(CIPHER_ALPHABET);
@@ -63,5 +112,27 @@ int main() {
     printAlphabet(PLAIN_ALPHABET);
     cout << "C Alphabet: ";
     printAlphabet(CIPHER_ALPHABET);
+
+    
+    vector<char> message;
+    message.reserve(50);
+    cout << "Enter message: ";
+    char letter = cin.get();
+    while (letter != 10)
+    {
+        message.push_back(letter);
+        letter = cin.get();
+    }
+    cout << "Original message is: ";
+    printMessage(message);
+    
+
+    cipherMessage(&message);
+    cout << "Cyphered message is: ";
+    printMessage(message);
+
+    cout << "Deciphered message is: ";
+    decipherMessage(&message);
+    printMessage(message);
     return 0;
 }
