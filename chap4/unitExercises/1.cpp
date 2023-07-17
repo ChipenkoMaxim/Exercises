@@ -15,7 +15,9 @@
 
 using namespace std;
 
-int strSize(char *arr) {
+typedef char* strType;
+
+int strSize(strType arr) {
     int size = 0;
     for(int i = 0; arr[i] != '\0'; i++) {
         size++;
@@ -23,28 +25,28 @@ int strSize(char *arr) {
     return size;
 }
 
-char characterAt(char *arr, int index) {
+char characterAt(strType arr, int index) {
     return arr[index];
 }
 
-char* append(char* arr, char symbol) {
+void append(strType& arr, char symbol) {
     int oldSize = strSize(arr);
     int newSize = oldSize + 2;
-    char* newStr = new char[newSize];
+    strType newStr = new char[newSize];
     for(int i = 0; arr[i] != '\0'; i++) {
         newStr[i] = arr[i];
     }
     newStr[oldSize] = symbol;
     delete[] arr;
-    return newStr;
+    arr = newStr;
 }
 
-char* concatenate(char* first, char* second) {
+void concatenate(strType& first, strType second) {
     int firstSize = strSize(first);
     int secondSize = strSize(second);
     int newSize = (firstSize + secondSize) + 1;
 
-    char* newStr = new char[newSize];
+    strType newStr = new char[newSize];
     int index = 0;
     for(int i = 0; first[i] != '\0'; index++, i++) {
         newStr[index] = first[i];
@@ -54,19 +56,19 @@ char* concatenate(char* first, char* second) {
     }
     delete[] first;
     delete[] second;
-    return newStr;
+    first = newStr;
 }
 
 
 int main() {
-    char* str = new char[10]{'H', 'e', 'l', 'l', 'o'};
+    strType str = new char[10]{'H', 'e', 'l', 'l', 'o'};
     cout << str << "\n";
     cout << strSize(str) << "\n";
     cout << characterAt(str, 4) << "\n";
-    str = append(str, ',');
+    append(str, ',');
     cout << str << "\n";
-    char* newStr = new char[10]{' ', 'W', 'o', 'r', 'l', 'd', '!'};
-    str = concatenate(str, newStr);
+    strType newStr = new char[10]{' ', 'W', 'o', 'r', 'l', 'd', '!'};
+    concatenate(str, newStr);
     cout << str << "\n";
     cout << characterAt(str, 7);
     return 0;
