@@ -43,9 +43,38 @@ void addRecord(student*& studentList, int ID, int grade) {
     } else if(studentList->nextStudent == NULL) {
         initRecord(studentList->nextStudent, ID, grade);
     } else {
-        student* newStudent = findPlaceInList(studentList->nextStudent);
-        initRecord(newStudent->nextStudent, ID, grade);
+        // student* newStudent = findPlaceInList(studentList->nextStudent);
+        // initRecord(newStudent->nextStudent, ID, grade);
+        student* newStudent = NULL;
+        initRecord(newStudent, ID, grade);
+        newStudent->nextStudent = studentList;
+        studentList = newStudent;
     }
+}
+
+int calcNumOfRecords(student* list) {
+    int numb = 0;
+    for(;list;numb++) {
+        list = list->nextStudent;
+    }
+    return numb;
+}
+
+int calcSumOfGrades(student* list) {
+    int sum = 0;
+    while (list)
+    {
+        sum+= list->grade;
+        list = list->nextStudent;
+    }
+    return sum;
+}
+
+double averageRecord(student* list) {
+    int numOfRecords = calcNumOfRecords(list);
+    int sumOfGrades = calcSumOfGrades(list);
+    cout << "sum = " << sumOfGrades << "\n";
+    return sumOfGrades / numOfRecords;
 }
 
 void printStudentsList(student* studentList) {
@@ -58,9 +87,11 @@ void printStudentsList(student* studentList) {
 
 int main() {
     student* students = NULL;
-    for(int i = 0; i < 15; i++) {
-        addRecord(students, 1000 + i, 50 + i);
+    for(int i = 0; i < 7; i++) {
+        addRecord(students, 1000 + i, (2 + i) * (i + 1));
     }
     printStudentsList(students);
+    double average = averageRecord(students);
+    cout << "Average = " << average << "\n";
     return 0;
 }
