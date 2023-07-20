@@ -53,9 +53,20 @@ void printString(String str) {
     cout << "\n";
 }
 
+char characterAt(String str, int index) {
+    while (str && index)
+    {
+        str = str->nextNode;
+        index--;
+    }
+    if(str == NULL) return '\0';
+    return str->letter;
+}
+
 int main() {
     String str = NULL;
     inputString(str);
     printString(str);
+    cout << characterAt(str, 1) << "\n";
     return 0;
 }
