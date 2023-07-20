@@ -1,5 +1,16 @@
 #include <iostream>
 
+// Change the implementation of our strings such that location[0] in the array
+// stores the size of the array (and therefore location[1] stores the first actual
+// character in the string), rather than using a null-character terminator.
+// Implement each of the three functions, append, concatenate, and charactertAt,
+// taking advantage of the stored size information whenever possible. Because
+// we’ll no longer be using the null-termination convention expected by the
+// standard output stream, you’ll need to write your own output function that
+// loops through its string parameter, displaying the characters.
+
+
+
 using namespace std;
 
 typedef char* strType;
