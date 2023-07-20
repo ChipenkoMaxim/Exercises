@@ -48,7 +48,13 @@ void fixedArrayMin() {
 }
 
 void dynamicArrayMin() {
-
+    int ARRAY_LENGTH = queryLength();
+    int* arr = new int[ARRAY_LENGTH];
+    fillArray(arr, ARRAY_LENGTH);
+    cout << "Elements in dynamic array: ";
+    printArray(arr, ARRAY_LENGTH);
+    int min = findMin(arr, ARRAY_LENGTH);
+    cout << "Min for fixed array = " << min << "\n";
 }
 
 int main() {
