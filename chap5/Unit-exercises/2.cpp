@@ -99,6 +99,7 @@ class StudentCollection {
         };
     public:
         StudentCollection();
+        ~StudentCollection();
         void addRecord(StudentRecord newStudent);
         StudentRecord recordWithNumber(int idNum);
         void removeRecord(int idNum);
@@ -107,7 +108,21 @@ class StudentCollection {
         typedef studentNode* studentList;
         studentList _listHead;
         bool isLastListItem();
+        void deleteList(studentList& listPtr);
 };
+
+void StudentCollection::deleteList(studentList& listPtr)  {
+    while (listPtr != NULL) 
+    {
+        studentNode* temp = listPtr;
+        listPtr = listPtr->next;
+        delete temp;
+    }
+}
+
+StudentCollection::~StudentCollection() {
+    deleteList(_listHead);
+}
 
 StudentCollection::StudentCollection() {
     _listHead = NULL;
@@ -165,7 +180,7 @@ void StudentCollection::removeRecord(int idNum) {
     if (trailing == NULL) {
         _listHead = _listHead->next;
     } else {
-        trailing->next = loopPtr->next;
+        trailing->next = loopPtr->next; 
     }
     delete loopPtr;
 }
