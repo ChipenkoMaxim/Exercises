@@ -104,6 +104,7 @@ class StudentCollection {
         StudentRecord recordWithNumber(int idNum);
         void removeRecord(int idNum);
         void displayCollection();
+        StudentCollection& operator=(const StudentCollection & rhs);
     private:
         typedef studentNode* studentList;
         studentList _listHead;
@@ -220,6 +221,14 @@ StudentCollection::studentList StudentCollection::copiedList(const studentList o
     return newList;
 }
 
+StudentCollection& StudentCollection::operator=(const StudentCollection &rhs) {
+    if (this != &rhs) {
+        deleteList(_listHead);
+        _listHead = copiedList(rhs._listHead);
+    }
+    return *this;
+}
+
 
 int main() {
      StudentCollection collection;
@@ -240,12 +249,16 @@ int main() {
     StudentRecord nonExRec = collection.recordWithNumber(999);
     nonExRec.printRecord();
 
+    StudentCollection collection1;
 
+    collection1 = collection;
     collection.removeRecord(1001);
     collection.removeRecord(1002);
     collection.removeRecord(1003);
     collection.removeRecord(1004);
     collection.removeRecord(1005);
     collection.displayCollection();
+
+    collection1.displayCollection();
     return 0;
 }
