@@ -109,6 +109,7 @@ class StudentCollection {
         studentList _listHead;
         bool isLastListItem();
         void deleteList(studentList& listPtr);
+        studentList copiedList(const studentList original);
 };
 
 void StudentCollection::deleteList(studentList& listPtr)  {
@@ -201,6 +202,25 @@ bool StudentCollection::isLastListItem() {
     return _listHead && _listHead->next == NULL;
 }
 
+StudentCollection::studentList StudentCollection::copiedList(const studentList original) {
+    if (original == NULL) {
+        return NULL;
+    }
+    studentList newList = new studentNode;
+    newList->studentData = original->studentData;
+    studentNode * oldLoopPtr = original->next;
+    studentNode * newLoopPtr = newList;
+    while (oldLoopPtr != NULL) {
+        newLoopPtr->next = new studentNode;
+        newLoopPtr = newLoopPtr->next;
+        newLoopPtr->studentData = oldLoopPtr->studentData;
+        oldLoopPtr = oldLoopPtr->next;
+    }
+    newLoopPtr->next = NULL;
+    return newList;
+}
+
+
 int main() {
      StudentCollection collection;
      collection.addRecord(StudentRecord(15, 1001, "Max"));
@@ -219,6 +239,7 @@ int main() {
     cout << "Nonexistent record: ";
     StudentRecord nonExRec = collection.recordWithNumber(999);
     nonExRec.printRecord();
+
 
     collection.removeRecord(1001);
     collection.removeRecord(1002);
