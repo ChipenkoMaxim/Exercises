@@ -114,16 +114,10 @@ StudentCollection::StudentCollection() {
 }
 
 void StudentCollection::addRecord(StudentRecord newStudent) {
-    if(_listHead == NULL) {
-        _listHead = new studentNode;
-        _listHead->studentData = newStudent;
-        _listHead->next = NULL;
-    } else {
-        studentNode* listIterator = new studentNode;
-        listIterator->studentData = newStudent;
-        listIterator->next = _listHead;
-        _listHead = listIterator;
-    }
+    studentNode* newNode = new studentNode;
+    newNode->studentData = newStudent;
+    newNode->next = _listHead;
+    _listHead = newNode;
 }
 
 StudentRecord StudentCollection::recordWithNumber(int idNum) {
@@ -141,26 +135,39 @@ StudentRecord StudentCollection::recordWithNumber(int idNum) {
 }
 
 void StudentCollection::removeRecord(int idNum) {
-    if(isLastListItem()) {
-        delete _listHead;
-        _listHead = NULL;
-        return;
-    }
+    // if(isLastListItem()) {
+    //     delete _listHead;
+    //     _listHead = NULL;
+    //     return;
+    // }
 
-    studentNode* prevRecord = _listHead;
-    studentNode* currRecord = _listHead;
-    while (currRecord != NULL)
-    {
-        if(currRecord->studentData.studentID() == idNum) {
-            prevRecord->next = currRecord->next;
-            delete currRecord;
-            currRecord = NULL;
-            currRecord = prevRecord->next;
-            break;
-        }
-        prevRecord = currRecord;
-        currRecord = currRecord->next;
+    // studentNode* prevRecord = _listHead;
+    // studentNode* currRecord = _listHead;
+    // while (currRecord != NULL)
+    // {
+    //     if(currRecord->studentData.studentID() == idNum) {
+    //         prevRecord->next = currRecord->next;
+    //         delete currRecord;
+    //         currRecord = NULL;
+    //         currRecord = prevRecord->next;
+    //         break;
+    //     }
+    //     prevRecord = currRecord;
+    //     currRecord = currRecord->next;
+    // }
+    studentNode * loopPtr = _listHead;
+    studentNode * trailing = NULL;
+    while (loopPtr != NULL && loopPtr->studentData.studentID() != idNum) {
+        trailing = loopPtr;
+        loopPtr = loopPtr->next;
     }
+    if (loopPtr == NULL) return;
+    if (trailing == NULL) {
+        _listHead = _listHead->next;
+    } else {
+        trailing->next = loopPtr->next;
+    }
+    delete loopPtr;
 }
 
 void StudentCollection::displayCollection() {
