@@ -106,6 +106,7 @@ class StudentCollection {
     private:
         typedef studentNode* studentList;
         studentList _listHead;
+        bool isLastListItem();
 };
 
 StudentCollection::StudentCollection() {
@@ -140,6 +141,12 @@ StudentRecord StudentCollection::recordWithNumber(int idNum) {
 }
 
 void StudentCollection::removeRecord(int idNum) {
+    if(isLastListItem()) {
+        delete _listHead;
+        _listHead = NULL;
+        return;
+    }
+
     studentNode* prevRecord = _listHead;
     studentNode* currRecord = _listHead;
     while (currRecord != NULL)
@@ -163,7 +170,11 @@ void StudentCollection::displayCollection() {
         listIterator->studentData.printRecord();
         listIterator = listIterator->next;
     }
-} 
+}
+
+bool StudentCollection::isLastListItem() {
+    return _listHead && _listHead->next == NULL;
+}
 
 int main() {
      StudentCollection collection;
@@ -188,7 +199,7 @@ int main() {
     collection.removeRecord(1002);
     collection.removeRecord(1003);
     collection.removeRecord(1004);
-    //collection.removeRecord(1005);
+    collection.removeRecord(1005);
     collection.displayCollection();
     return 0;
 }
