@@ -170,6 +170,9 @@ void StudentCollection::displayCollection() {
         listIterator->studentData.printRecord();
         listIterator = listIterator->next;
     }
+    if(_listHead == NULL) {
+        cout << "Collection is Empty!\n";
+    }
 }
 
 bool StudentCollection::isLastListItem() {
@@ -192,8 +195,8 @@ int main() {
      
 
     cout << "Nonexistent record: ";
-     StudentRecord nonExRec = collection.recordWithNumber(999);
-     nonExRec.printRecord();
+    StudentRecord nonExRec = collection.recordWithNumber(999);
+    nonExRec.printRecord();
 
     collection.removeRecord(1001);
     collection.removeRecord(1002);
