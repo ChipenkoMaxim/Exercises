@@ -100,6 +100,7 @@ class StudentCollection {
     public:
         StudentCollection();
         ~StudentCollection();
+        StudentCollection(const StudentCollection &original);
         void addRecord(StudentRecord newStudent);
         StudentRecord recordWithNumber(int idNum);
         void removeRecord(int idNum);
@@ -121,6 +122,11 @@ void StudentCollection::deleteList(studentList& listPtr)  {
         delete temp;
     }
 }
+
+StudentCollection::StudentCollection(const StudentCollection &original) {
+    _listHead = copiedList(original._listHead);
+}
+
 
 StudentCollection::~StudentCollection() {
     deleteList(_listHead);
@@ -249,9 +255,9 @@ int main() {
     StudentRecord nonExRec = collection.recordWithNumber(999);
     nonExRec.printRecord();
 
-    StudentCollection collection1;
+    StudentCollection collection1(collection);
 
-    collection1 = collection;
+    //collection1 = collection;
     collection.removeRecord(1001);
     collection.removeRecord(1002);
     collection.removeRecord(1003);
