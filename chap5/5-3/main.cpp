@@ -24,6 +24,7 @@ class String {
         typedef charNode* stringHead;
         stringHead _head;
         void initNode(charNode*& node, char newChar);
+        void deleteString(stringHead& head);
 };
 
 
@@ -53,7 +54,9 @@ String::String() {
     _head = NULL;
 }
 
-String::~String() {}
+String::~String() {
+    deleteString(_head);
+}
 
 void String::initNode(charNode*& node, char newChar) {
     node = new charNode;
@@ -99,6 +102,15 @@ void String::concatenate(String& str) {
     {
         append(secondIterator->letter);
         secondIterator = secondIterator->next;
+    }
+}
+
+void String::deleteString(stringHead& head) {
+    while (head)
+    {
+        charNode* temp = head;
+        head = head->next;
+        delete temp;
     }
 }
 
