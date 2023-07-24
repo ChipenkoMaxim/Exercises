@@ -16,6 +16,7 @@ class Automobile {
         int year();
         void setYear(int year);
         void toString();
+        int automobileAge();
     private:
         string _manufacturer;
         string _model;
@@ -26,6 +27,7 @@ class Automobile {
 int main () {
     Automobile car("Chevrolet", "Impala", 1957);
     car.toString();
+    cout << "Automobile's age = " << car.automobileAge();
     return 0;
 }
 
@@ -66,4 +68,8 @@ void Automobile::toString() {
     cout << year() <<
     " " << manufacturer() <<
     " " << model() << "\n";
+}
+
+int Automobile::automobileAge() {
+    return 2023 - year();
 }
