@@ -23,14 +23,55 @@ class String {
     private:
         typedef charNode* stringHead;
         stringHead _head;
+        void initNode(charNode*& node, char newChar);
 };
 
 
-
 int main() {
+    String str;
+    str.append('H');
+    str.append('e');
+    str.append('l');
+    str.append('l');
+    str.append('o');
+    str.append('!');
+    str.toString();
     return 0;
 }
 
 String::String() {
     _head = NULL;
+}
+
+String::~String() {}
+
+void String::initNode(charNode*& node, char newChar) {
+    node = new charNode;
+    node->letter = newChar;
+    node->next = NULL;
+}
+
+
+void String::append(char newChar) {
+    if(_head == NULL) {
+        initNode(_head, newChar);
+        return;
+    }
+
+    charNode* iterator = _head;
+    while (iterator->next != NULL)
+    {
+        iterator = iterator->next;
+    }
+    initNode(iterator->next, newChar);
+}
+
+void String::toString() {
+    charNode* iterator = _head;
+    while (iterator != NULL)
+    {
+        cout << iterator->letter;
+        iterator = iterator->next;
+    }
+    cout << "\n";
 }
