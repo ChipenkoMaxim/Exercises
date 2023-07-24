@@ -36,6 +36,8 @@ int main() {
     str.append('o');
     str.append('!');
     str.toString();
+
+    cout << str.characterAt(4);
     return 0;
 }
 
@@ -64,6 +66,17 @@ void String::append(char newChar) {
         iterator = iterator->next;
     }
     initNode(iterator->next, newChar);
+}
+
+char String::characterAt(int index) {
+    charNode* str = _head;
+    while (str && index)
+    {
+        str = str->next;
+        index--;
+    }
+    if(str == NULL) return '\0';
+    return str->letter;
 }
 
 void String::toString() {
