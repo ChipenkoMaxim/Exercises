@@ -10,7 +10,7 @@ using namespace std;
 class Automobile {
     public:
         Automobile();
-        Automobile(string manufacturer, string model, string year);
+        Automobile(string manufacturer, string model, int year);
         string manufacturer();
         void setManufacturer(string manufacturer);
         string model();
@@ -27,4 +27,36 @@ class Automobile {
 int main () {
 
     return 0;
+}
+
+Automobile::Automobile() {}
+
+Automobile:: Automobile(string manufacturer, string model, int year) {
+    setManufacturer(manufacturer);
+    setModel(model);
+    setYear(year);
+}
+
+string Automobile::manufacturer() {
+    return _manufacturer;
+}
+
+void Automobile::setManufacturer(string manufacturer) {
+    _manufacturer = manufacturer;
+}
+
+string Automobile::model() {
+    return _model;
+}
+
+void Automobile::setModel(string model) {
+    _model = model;
+}
+
+int Automobile::year() {
+    return _year;
+}
+
+void Automobile::setYear(int year) {
+    _year = year;
 }
