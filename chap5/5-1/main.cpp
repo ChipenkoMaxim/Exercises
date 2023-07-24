@@ -17,6 +17,7 @@ class Automobile {
         void setModel(string model);
         int year();
         void setYear(int year);
+        void toString();
     private:
         string _manufacturer;
         string _model;
@@ -25,7 +26,15 @@ class Automobile {
 
 
 int main () {
+    Automobile car("BMW", "X5", 2005);
+    cout << car.manufacturer() << "  ";
+    cout << car.model() << "  ";
+    cout << car.year() << "\n";
 
+    car.setManufacturer("Porsche");
+    car.setModel("Something");
+    car.setYear(2003);
+    car.toString();
     return 0;
 }
 
@@ -36,6 +45,7 @@ Automobile:: Automobile(string manufacturer, string model, int year) {
     setModel(model);
     setYear(year);
 }
+
 
 string Automobile::manufacturer() {
     return _manufacturer;
@@ -59,4 +69,10 @@ int Automobile::year() {
 
 void Automobile::setYear(int year) {
     _year = year;
+}
+
+void Automobile::toString() {
+    cout << "Manufacturer = " << manufacturer() <<
+    ", Model = " << model() <<
+    ", Year = " << year() << "\n";
 }
