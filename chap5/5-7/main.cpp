@@ -28,14 +28,15 @@ class Student {
         void deleteRecords(headRecord& head);
         headRecord deepCopy(const headRecord orig);
         void initRecord(studentRecord*& stud, int id, int grade);
+        int calcNumOfRecords();
+        int calcSumOfGrades();
 };
 
 int main() {
     Student stud;
     for(int i = 0; i < 100; i++) stud.addRecord(1001 + i, i + 1);
     stud.toString();
-    Student stud1 = stud;
-    stud1.toString();
+    cout << "Average record = " << stud.averageRecord();
     return 0;
 }
 
@@ -107,6 +108,33 @@ void Student::addRecord(int ID, int grade) {
         iterator = iterator->next;
     }
     initRecord(iterator->next, ID, grade);
+}
+
+int Student::calcNumOfRecords() {
+    studentRecord* iter = _head;
+    int num = 0;
+    while (iter)
+    {
+        num++;
+        iter = iter->next;
+    }
+    return num;
+}
+
+int Student::calcSumOfGrades() {
+    studentRecord* iter = _head;
+    int sum = 0;
+    while (iter)
+    {
+        sum += iter->grade;
+        iter = iter->next;
+    }
+    return sum;
+}
+
+
+double Student::averageRecord() {
+    return calcSumOfGrades() / calcNumOfRecords();
 }
 
 void Student::toString() {
