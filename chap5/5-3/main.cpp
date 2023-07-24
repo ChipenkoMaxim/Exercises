@@ -20,11 +20,13 @@ class String {
         char characterAt(int index);
         void concatenate(String& str);
         void toString();
+        String& operator=(const String& rhs);
     private:
         typedef charNode* stringHead;
         stringHead _head;
         void initNode(charNode*& node, char newChar);
         void deleteString(stringHead& head);
+        stringHead deepCopy(const stringHead orig);
 };
 
 
@@ -36,16 +38,25 @@ int main() {
     str.append('l');
     str.append('o');
     str.append('!');
-    str.toString();
+    //str.toString();
 
-    cout << str.characterAt(4);
+    //cout << str.characterAt(4);
     String str1;
     str1.append('W');
     str1.append('o');
     str1.append('r');
     str1.append('l');
     str1.append('d');
-    str.concatenate(str1);
+    // str.concatenate(str1);
+    // str.toString();
+    str1.toString();
+    str.toString();
+    str = str1;
+    str.toString();
+    str1.toString();
+    str.append('!');
+    str1.append('?');
+    str1.toString();
     str.toString();
     return 0;
 }
@@ -113,6 +124,36 @@ void String::deleteString(stringHead& head) {
         delete temp;
     }
 }
+
+String::stringHead String::deepCopy(const stringHead orig) {
+    if(orig == NULL) {
+        return NULL;
+    }
+
+    stringHead newStringList = new charNode;
+    newStringList->letter = orig->letter;
+
+    stringHead newListIterator = newStringList;
+    stringHead origIterator = orig->next;
+    while (origIterator)
+    {
+        newListIterator->next = new charNode;
+        newListIterator = newListIterator->next;
+        newListIterator->letter = origIterator->letter;
+        origIterator = origIterator->next;
+    }
+    newListIterator->next = NULL;
+    return newStringList;
+}
+
+String& String::operator=(const String& rhs) {
+    if(_head != rhs._head) {
+        deleteString(_head);
+        _head = deepCopy(rhs._head);
+    }
+    return *this;
+}
+
 
 void String::toString() {
     charNode* iterator = _head;
