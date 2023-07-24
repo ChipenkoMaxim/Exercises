@@ -18,7 +18,7 @@ class String {
         ~String();
         void append(char newChar);
         char characterAt(int index);
-        void concatenate(String str);
+        void concatenate(String& str);
         void toString();
     private:
         typedef charNode* stringHead;
@@ -38,6 +38,14 @@ int main() {
     str.toString();
 
     cout << str.characterAt(4);
+    String str1;
+    str1.append('W');
+    str1.append('o');
+    str1.append('r');
+    str1.append('l');
+    str1.append('d');
+    str.concatenate(str1);
+    str.toString();
     return 0;
 }
 
@@ -77,6 +85,21 @@ char String::characterAt(int index) {
     }
     if(str == NULL) return '\0';
     return str->letter;
+}
+
+void String::concatenate(String& str) {
+    charNode* firstIterator = _head;
+    while (firstIterator != NULL && firstIterator->next)
+    {
+        firstIterator = firstIterator->next;
+    }
+    
+    charNode* secondIterator = str._head;
+    while (secondIterator)
+    {
+        append(secondIterator->letter);
+        secondIterator = secondIterator->next;
+    }
 }
 
 void String::toString() {
