@@ -19,7 +19,7 @@ void printArr(int* arr, int N) {
     cout << "\n";
 }
 
-int calcSumOfPositive(int* arr, int N) {
+int calcSumOfPositiveIter(int* arr, int N) {
     int sum = 0;
     for(int i = 0; i < N; i++) {
         if(arr[i] > 0) {
@@ -29,12 +29,21 @@ int calcSumOfPositive(int* arr, int N) {
     return sum;
 }
 
+int calcSumOfPositiveRecur(int* arr, int N) {
+    if(N == 0) return 0;
+    int sum = calcSumOfPositiveRecur(arr, N - 1);
+    if(arr[N - 1] > 0) sum += arr[N - 1];
+    return sum;
+}
+
+
 
 int main() {
     srand(time(NULL));
     int arr[10];
     fillArr(arr, 10);
     printArr(arr, 10);
-    cout <<  calcSumOfPositive(arr, 10) << "\n";
+    cout <<  calcSumOfPositiveIter(arr, 10) << "\n";
+    cout << calcSumOfPositiveRecur(arr, 10) << "\n";
     return 0;
 }
