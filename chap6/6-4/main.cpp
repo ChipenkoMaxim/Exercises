@@ -28,6 +28,12 @@ int findMin(int* arr, int N) {
     return min;
 }
 
+int findMinRecur(int* arr, int N) {
+    if(N == 1) return arr[N - 1];
+    int min = findMin(arr, N - 1);
+    if(arr[N - 1] < min) min = arr[N - 1];
+    return min;
+}
 
 
 int main() {
@@ -36,6 +42,6 @@ int main() {
     fillArr(arr, 10);
     printArr(arr, 10);
     cout << "Min = " << findMin(arr, 10) << "\n";
-
+    cout << "Min = " << findMinRecur(arr, 10) << "\n";
     return 0;
 }
