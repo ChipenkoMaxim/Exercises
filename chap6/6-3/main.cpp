@@ -4,8 +4,6 @@
 // and that returns the number of occurrences of the target in the array. Solve
 // the problem first using iteration, then recursion.
 
-
-
 using namespace std;
 
 void fillArr(int* arr, int N) {
