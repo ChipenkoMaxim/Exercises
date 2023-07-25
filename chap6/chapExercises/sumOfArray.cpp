@@ -14,10 +14,17 @@ int calcSumIterative(int* arr, int N) {
     return sum;
 }
 
+int calcSumRecursive(int* arr, int N) {
+    if(N == 0) return 0;
+    return arr[N - 1] + calcSumRecursive(arr, N - 1);
+}
 
 int main() {
     int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int sum = calcSumIterative(arr, 10);
     cout << sum << "\n";
+
+    int sum1 = calcSumRecursive(arr, 10);
+    cout << sum1 << "\n";
     return 0;
 }
