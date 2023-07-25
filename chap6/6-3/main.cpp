@@ -21,7 +21,7 @@ void printArr(int* arr, int N) {
     cout << "\n";
 }
 
-int calcTargetOccurrences(int* arr, int N, int target) {
+int calcTargetOccurrencesIterative(int* arr, int N, int target) {
     int numOfTarget = 0;
     for(int i = 0; i < N; i++) {
         if(arr[i] == target) numOfTarget++;
@@ -29,6 +29,12 @@ int calcTargetOccurrences(int* arr, int N, int target) {
     return numOfTarget;
 }
 
+int calcTargetOccurrencesRecursive(int* arr, int N, int target) {
+    if(N == 0) return 0;
+    int quantity = calcTargetOccurrencesRecursive(arr, N - 1, target);
+    if(arr[N - 1] == target) quantity++;
+    return quantity;
+}
 
 
 int main() {
@@ -36,7 +42,7 @@ int main() {
     int arr[10];
     fillArr(arr, 10);
     printArr(arr, 10);
-    cout << "Num of 5s = " << calcTargetOccurrences(arr, 10, 5) << "\n";
-    
+    cout << "Num of 5s = " << calcTargetOccurrencesIterative(arr, 10, 5) << "\n";
+    cout << "Num of 5s = " << calcTargetOccurrencesRecursive(arr, 10, 5) << "\n";
     return 0;
 }
