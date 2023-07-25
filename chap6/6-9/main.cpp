@@ -20,6 +20,22 @@ void traverseTree(treeRoot node) {
     traverseTree(node->right);
 }
 
+bool isHeapTree(treeRoot node) {
+    if(node == NULL) return 1;
+    if(node->left == NULL && node->right == NULL) return 1;
+    int leftSubtree = isHeapTree(node->left);
+    int rightSubTree = isHeapTree(node->right);
+    bool res;
+    if(node->left == NULL && node->right != NULL) {
+        res =  node->data > node->right->data && leftSubtree && rightSubTree;
+    } else if(node->left != NULL && node->right == NULL) {
+        res =  node->data > node->left->data && leftSubtree && rightSubTree;
+    } else {
+        res = node->data > node->left->data && node->data > node->right->data && leftSubtree && rightSubTree;
+    }
+    return res;
+}
+
 
 int main() {
     treeRoot root = new tree;
@@ -38,5 +54,6 @@ int main() {
     root->right->right = new tree;
     root->right->right->data = 4;
     traverseTree(root);
+    cout << "\n" << isHeapTree(root) << "\n";
     return 0;
 }
