@@ -30,6 +30,13 @@ bool hasOddParityIterative(bool* arr, int N) {
     return numOfOnes % 2;
 }
 
+bool hasOddParityRecursive(bool* arr, int N) {
+    if(N == 0) return 0;
+    int current = arr[N - 1];
+    int restArrResult = hasOddParityRecursive(arr, N - 1);
+    return current ^ restArrResult;
+}
+
 
 int main() {
     srand(time(NULL));
@@ -37,5 +44,6 @@ int main() {
     fillArr(arr, 10);
     printArr(arr, 10);
     cout << hasOddParityIterative(arr, 10) << "\n";
+    cout << hasOddParityRecursive(arr, 10) << "\n";
     return 0;
 }
