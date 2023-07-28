@@ -22,6 +22,7 @@ class Tree {
         void printTree();
         void size();
         double average();
+        int median();
     private:
         typedef treeNode* treeRoot;
         treeRoot _root;
@@ -29,6 +30,7 @@ class Tree {
         void privatePrintTree(treeRoot root);
         int treeSize(treeRoot root);
         int calcSum(treeRoot root);
+        void findMedian(treeRoot root, int& offsetFromStart, int& median);
 };
 
 int main() {
@@ -45,9 +47,16 @@ int main() {
     tr.addNode(7);
     tr.addNode(7);
     tr.addNode(7);
+    tr.addNode(10);
+    tr.addNode(10);
+    tr.addNode(10);
+    tr.addNode(10);
+    tr.addNode(10);
+
     tr.printTree();
     tr.size();
     cout << "Average = "  << tr.average() << "\n";
+    cout << "Median = " << tr.median() << "\n";
     return 0;
 }
 
@@ -108,4 +117,20 @@ int Tree::calcSum(treeRoot root) {
     int rightSum = calcSum(root->right);
 
     return leftSum + rightSum + root->data;
+}
+
+int Tree::median() {
+    int medianSubs = treeSize(_root) / 2;
+    int median = -1;
+    findMedian(_root, medianSubs, median);
+    return median;
+}
+
+void Tree::findMedian(treeRoot root, int& offsetFromStart, int& median) {
+    if(root == NULL) return;
+
+    findMedian(root->left, offsetFromStart, median);
+    offsetFromStart--;
+    if(offsetFromStart == 0) median = root->data;
+    findMedian(root->right, offsetFromStart, median);
 }
