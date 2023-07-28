@@ -23,6 +23,7 @@ class Tree {
         void size();
         double average();
         int median();
+        int mode();
     private:
         typedef treeNode* treeRoot;
         treeRoot _root;
@@ -31,6 +32,7 @@ class Tree {
         int treeSize(treeRoot root);
         int calcSum(treeRoot root);
         void findMedian(treeRoot root, int& offsetFromStart, int& median);
+        void findMode(treeRoot root, int& frequency, int& maxFrequency, int& mode, int& maxMode);
 };
 
 int main() {
@@ -57,6 +59,7 @@ int main() {
     tr.size();
     cout << "Average = "  << tr.average() << "\n";
     cout << "Median = " << tr.median() << "\n";
+    cout << "Mode = " << tr.mode() << "\n";
     return 0;
 }
 
@@ -133,4 +136,38 @@ void Tree::findMedian(treeRoot root, int& offsetFromStart, int& median) {
     offsetFromStart--;
     if(offsetFromStart == 0) median = root->data;
     findMedian(root->right, offsetFromStart, median);
+}
+
+
+int Tree::mode() {
+    int frequency = 0;
+    int maxFrequency = 0;
+    int mode = -1;
+    int maxMode = -1;
+    findMode(_root, frequency, maxFrequency ,mode, maxMode);
+    return maxMode;
+}
+
+
+void Tree::findMode(treeRoot root, int& frequency , int& maxFrequency,int& mode, int& maxMode) {
+    if(root == NULL) return;
+    
+    findMode(root->left, frequency, maxFrequency, mode, maxMode);
+    if(mode == -1) {
+        mode = root->data;
+        frequency++;
+        maxFrequency = frequency;
+        maxMode = mode;
+    } else if(mode == root->data) {
+        frequency++;
+    } else if(mode != root->data && frequency > maxFrequency) {
+        maxFrequency = frequency;
+        frequency = 0;
+        maxMode = mode;
+        mode = root->data;
+    } else {
+        mode = root->data;
+        frequency = 0;
+    }
+    findMode(root->right, frequency, maxFrequency, mode, maxMode);
 }
