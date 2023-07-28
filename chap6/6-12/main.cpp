@@ -1,9 +1,9 @@
 #include <iostream>
 
-// Write a recursive function that is passed a binary search tree’s root pointer and
-// a new value to be inserted and that creates a new node with the new value,
-// placing it in the correct location to maintain the binary search tree structure.
-// Hint: Consider making the root pointer parameter a reference parameter.
+// Design your own: Consider basic statistical questions you can ask of a set of
+// numerical values, such as average, median, mode, and so forth. Attempt to
+// write recursive functions to compute those statistics for a binary tree of integers.
+// Some are easier to write than others. Why?
 
 
 using namespace std;
@@ -21,12 +21,14 @@ class Tree {
         void addNode(int newData);
         void printTree();
         void size();
+        double average();
     private:
         typedef treeNode* treeRoot;
         treeRoot _root;
         void privateAddNode(treeRoot& root, int newData);
         void privatePrintTree(treeRoot root);
         int treeSize(treeRoot root);
+        int calcSum(treeRoot root);
 };
 
 int main() {
@@ -45,6 +47,7 @@ int main() {
     tr.addNode(7);
     tr.printTree();
     tr.size();
+    cout << "Average = "  << tr.average() << "\n";
     return 0;
 }
 
@@ -93,4 +96,16 @@ int Tree::treeSize(treeRoot root) {
 void Tree::size() {
     int size = treeSize(_root);
     cout << size << "\n";
+}
+
+double Tree::average() {
+    return (double)calcSum(_root) / (double)treeSize(_root);
+}
+
+int Tree::calcSum(treeRoot root) {
+    if(root == NULL) return 0;
+    int leftSum = calcSum(root->left);
+    int rightSum = calcSum(root->right);
+
+    return leftSum + rightSum + root->data;
 }
