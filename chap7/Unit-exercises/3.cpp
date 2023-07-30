@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 using namespace std;
 
 // P R O B L E M : S O R T I N G S O M E , L E A V IN G O T H E R S A L O N E
@@ -89,6 +90,37 @@ void insertionSort(StudentData arr[], int size) {
     }
 }
 
+// int compareStudentData(const void* voidA, const void* voidB) {
+//     // //StudentData* A = (StudentData*)voidA;
+//     StudentData* A;
+//     A = (StudentData*)voidA;
+//     // //StudentData* B = (StudentData*)voidB;
+//     StudentData* B;
+//     B = (StudentData*)voidB;
+//     B->grade();
+//     return A->grade() - B->grade();
+// }
+
+
+void sortByQuickSort(StudentData arr[], int size) {
+    StudentData sortedStud[size];
+    int sortedCount = 0;
+    for(int i = 0; i < size; i++) {
+        if(arr[i].grade() != -1) {
+            sortedStud[sortedCount] = arr[i];
+            sortedCount++;
+        }
+    }
+    insertionSort(sortedStud, sortedCount);
+    //qsort(sortedStud, sortedCount, sizeof(StudentData), compareStudentData);
+    for(int i = 0, j = 0; i < size; i++) {
+        if(arr[i].grade() != -1) {
+            arr[i] = sortedStud[j];
+            j++;
+        }
+    }
+}
+
 
 int main() {
    StudentData studArr[STUDENT_ARRAY_SIZE];
@@ -104,7 +136,7 @@ int main() {
    studArr[9] = StudentData(1010, 35, "Max10");
    for(int i = 0; i < STUDENT_ARRAY_SIZE; i++) studArr[i].toString();
    cout << "\n\n";
-   insertionSort(studArr, STUDENT_ARRAY_SIZE);
+   sortByQuickSort(studArr, STUDENT_ARRAY_SIZE);
    for(int i = 0; i < STUDENT_ARRAY_SIZE; i++) studArr[i].toString();
    return 0;
 }
