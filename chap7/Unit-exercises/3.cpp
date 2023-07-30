@@ -90,16 +90,17 @@ void insertionSort(StudentData arr[], int size) {
     }
 }
 
-// int compareStudentData(const void* voidA, const void* voidB) {
-//     // //StudentData* A = (StudentData*)voidA;
-//     StudentData* A;
-//     A = (StudentData*)voidA;
-//     // //StudentData* B = (StudentData*)voidB;
-//     StudentData* B;
-//     B = (StudentData*)voidB;
-//     B->grade();
-//     return A->grade() - B->grade();
-// }
+bool compareStudentData(StudentData& lhs, StudentData& rhs) {
+    // // //StudentData* A = (StudentData*)voidA;
+    // StudentData* A;
+    // A = (StudentData*)voidA;
+    // // //StudentData* B = (StudentData*)voidB;
+    // StudentData* B;
+    // B = (StudentData*)voidB;
+    // B->grade();
+    // return A->grade() - B->grade();
+    return lhs.grade() < rhs.grade();
+}
 
 
 void sortByQuickSort(StudentData arr[], int size) {
@@ -111,7 +112,8 @@ void sortByQuickSort(StudentData arr[], int size) {
             sortedCount++;
         }
     }
-    insertionSort(sortedStud, sortedCount);
+    sort(sortedStud, sortedStud + sortedCount, compareStudentData);
+    //insertionSort(sortedStud, sortedCount);
     //qsort(sortedStud, sortedCount, sizeof(StudentData), compareStudentData);
     for(int i = 0, j = 0; i < size; i++) {
         if(arr[i].grade() != -1) {
