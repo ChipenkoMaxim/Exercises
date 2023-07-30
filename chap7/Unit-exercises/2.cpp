@@ -2,16 +2,15 @@
 #include <cstring>
 using namespace std;
 
-// PROBLEM: THE FIRST STUDENT
-// At a particular school, each class has a designated “first student” who is responsible
-// for maintaining order in the classroom if the teacher has to leave the room. Originally,
-// this title was bestowed upon the student with the highest grade, but now some teach-
-// ers think the first student should be the student with the greatest seniority, which means
-// the lowest student ID number, as they are assigned sequentially. Another faction of
-// teachers thinks the first student tradition is silly and intends to protest by simply choos-
-// ing the student whose name appears first in the alphabetical class roll. Our task is to
-// modify the student collection class, adding a method to retrieve the first student from
-// the collection, while accommodating the selection criteria of the various teacher groups.
+// P R O B L E M : E F F IC I E N T T R A V E R S A L
+// A programming project will use your studentCollection class. The client code needs the
+// ability to traverse all of the students in the collection. Obviously, to maintain information
+// hiding, the client code cannot be given direct access to the list, but it’s a requirement
+// that the traversals are efficient.
+
+class StudentData;
+class Student;
+class scIterator;
 
 
 class StudentData {
@@ -69,7 +68,6 @@ void StudentData::toString() {
     cout << "Name = " << name() << ", ID = " << id() << ", Grade = " << grade() << "\n";
 }
 
-
 typedef bool (*firstStudentPolicy)(StudentData r1, StudentData r2);
 
 class Student {
@@ -79,6 +77,7 @@ class Student {
             studentRecord* next;
         };
     public:
+        friend class scIterator;
         Student();
         Student(const Student& stud);
         ~Student();
@@ -89,6 +88,7 @@ class Student {
         void toString();
         void setFirstStudentPolicy(firstStudentPolicy f);
         StudentData firstStudent();
+        scIterator firstItemIterator();
     private:
         firstStudentPolicy _currentPolicy;
         typedef studentRecord* headRecord;
@@ -96,9 +96,8 @@ class Student {
         void deleteRecords(headRecord& head);
         headRecord deepCopy(const headRecord orig);
         void initRecord(studentRecord*& stud, StudentData data);
-        int calcNumOfRecords();
-        int calcSumOfGrades();
 };
+
 
 
 bool higherGrade(StudentData r1, StudentData r2) {
@@ -112,8 +111,6 @@ bool lowerStudentNumber(StudentData r1, StudentData r2) {
 bool nameComesFirst(StudentData r1, StudentData r2) {
     return strcmp(r1.name().c_str(), r2.name().c_str()) < 0;
 }
-
-
 
 
 int main() {
@@ -130,12 +127,53 @@ int main() {
     cout << "First Student is: ";
     newData = stud.firstStudent();
     newData.toString();
-    // cout << "Average record = " << stud.averageRecord() << "\n";
+    cout << "Average record = " << stud.averageRecord() << "\n";
     // Student stud1;
     // stud1 = stud.recordsWithinRange(1, 10);
     // stud1.toString();
     return 0;
 }
+
+
+class scIterator {
+    public:
+        scIterator();
+        scIterator(Student::studentRecord* initial);
+        void advance();
+        bool pastEnd();
+        StudentData student();
+    private:
+        Student::studentRecord* current;
+};
+
+
+scIterator::scIterator() {
+    current = NULL;
+}
+scIterator::scIterator(Student::studentRecord* initial) {
+    current = initial;
+}
+
+void scIterator::advance() {
+    if(current != NULL) {
+        current = current->next;
+    }
+}
+
+bool scIterator::pastEnd() {
+    return current == NULL;
+}
+
+StudentData scIterator::student() {
+    if(current == NULL) {
+        StudentData dummyStud(-1, -1, "");
+        return dummyStud;
+    } else {
+        return current->data;
+    }
+}
+
+
 
 Student::Student() {
     _head = NULL;
@@ -209,31 +247,24 @@ void Student::addRecord(StudentData data) {
     initRecord(iterator->next, data);
 }
 
-int Student::calcNumOfRecords() {
-    studentRecord* iter = _head;
-    int num = 0;
-    while (iter)
-    {
-        num++;
-        iter = iter->next;
-    }
-    return num;
-}
 
-int Student::calcSumOfGrades() {
-    studentRecord* iter = _head;
-    int sum = 0;
-    while (iter)
-    {
-        sum += iter->data.grade();
-        iter = iter->next;
-    }
-    return sum;
+scIterator Student::firstItemIterator() {
+    return scIterator(_head);
 }
 
 
 double Student::averageRecord() {
-    return calcSumOfGrades() / calcNumOfRecords();
+    scIterator iter;
+    int gradeSum = 0;
+    int recordNum = 0;
+    iter = firstItemIterator();
+    while (!iter.pastEnd())
+    {
+        recordNum++;
+        gradeSum += iter.student().grade();
+        iter.advance();
+    }
+    return gradeSum / recordNum;
 }
 
 Student& Student::recordsWithinRange(int lowerLimit, int upperLimit) {
