@@ -74,10 +74,17 @@ void insertionSort(StudentData arr[], int size) {
     int start = 0;
     int end = size - 1;
     for(int i = start + 1; i <= end; i++) {
-        for(int j = i; j > start && arr[j - 1].grade() > arr[j].grade(); j--) {
-            StudentData temp = arr[j - 1];
-            arr[j - 1] = arr[j];
-            arr[j] = temp;
+        if(arr[i].grade() != -1) {
+            int rightSwap = i;
+            for(int leftSwap = i - 1; leftSwap >= start && (arr[leftSwap].grade() > arr[rightSwap].grade() 
+            || arr[leftSwap].grade() == -1); leftSwap--) {
+                if(arr[leftSwap].grade() != -1) {
+                    StudentData temp = arr[leftSwap];
+                    arr[leftSwap] = arr[rightSwap];
+                    arr[rightSwap] = temp;
+                    rightSwap = leftSwap;
+                }
+            }
         }
     }
 }
@@ -87,14 +94,16 @@ int main() {
    StudentData studArr[STUDENT_ARRAY_SIZE];
    studArr[0] = StudentData(1001, 95, "Max1");
    studArr[1] = StudentData(1002, 75, "Max2");
-   studArr[2] = StudentData(1003, 85, "Max3");
-   studArr[3] = StudentData(1004, 65, "Max4");
-   studArr[4] = StudentData(1005, 55, "Max5");
-   studArr[5] = StudentData(1006, 15, "Max6");
+   studArr[2] = StudentData(1003, -1, "Max3");
+   studArr[3] = StudentData(1004, -1, "Max4");
+   studArr[4] = StudentData(1005, -1, "Max5");
+   studArr[5] = StudentData(1006, -1, "Max6");
    studArr[6] = StudentData(1007, 15, "Max7");
    studArr[7] = StudentData(1008, 35, "Max8");
-   studArr[8] = StudentData(1009, 55, "Max9");
+   studArr[8] = StudentData(1009, -1, "Max9");
    studArr[9] = StudentData(1010, 35, "Max10");
+   for(int i = 0; i < STUDENT_ARRAY_SIZE; i++) studArr[i].toString();
+   cout << "\n\n";
    insertionSort(studArr, STUDENT_ARRAY_SIZE);
    for(int i = 0; i < STUDENT_ARRAY_SIZE; i++) studArr[i].toString();
    return 0;
