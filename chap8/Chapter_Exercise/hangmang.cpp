@@ -12,6 +12,20 @@ using std::iterator;
 #include <cstring>
 
 
+
+void removeWordsWithoutLetter(list<string> & wordList, char requiredLetter) {
+    list<string>::const_iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        if (iter->find(requiredLetter) == string::npos) {
+            iter = wordList.erase(iter);
+        } else {
+            iter++;
+        }
+    }
+}
+
+
 bool numberInPattern(const list<int> & pattern, int number) {
     list<int>::const_iterator iter;
     iter = pattern.begin();
