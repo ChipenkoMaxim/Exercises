@@ -12,6 +12,19 @@ using std::iterator;
 #include <cstring>
 
 
+void removeWordsOfWrongLength(list<string> & wordList, int acceptableLength) {
+    list<string>::iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        if (iter->length() != acceptableLength) {
+            iter = wordList.erase(iter);
+        } else {
+            iter++;
+        }
+    }
+}
+
+
 int countWordsWithoutLetter(const list<string> & wordList, char letter) {
     list<string>::const_iterator iter;
     int count = 0;
