@@ -12,6 +12,19 @@ using std::iterator;
 #include <cstring>
 
 
+int countWordsWithoutLetter(const list<string> & wordList, char letter) {
+    list<string>::const_iterator iter;
+    int count = 0;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        if (iter->find(letter) == string::npos) {
+            count++;
+        }
+        iter++;
+    }
+    return count;
+}
+
 
 void displayList(const list<string>& wordList) {
     list<string>::const_iterator iter;
