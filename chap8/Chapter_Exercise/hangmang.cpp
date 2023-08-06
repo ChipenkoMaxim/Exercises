@@ -12,6 +12,34 @@ using std::iterator;
 #include <cstring>
 
 
+bool numberInPattern(const list<int> & pattern, int number) {
+    list<int>::const_iterator iter;
+    iter = pattern.begin();
+    while (iter != pattern.end()) {
+        if (*iter == number) {
+            return true;
+        }
+        iter++;
+    }
+    return false;
+}
+
+bool matchesPattern(string word, char letter, list<int> pattern) {
+    for (int i = 0; i < word.length(); i++) {
+        if (word[i] == letter) {
+            if (!numberInPattern(pattern, i)) {
+                return false;
+            }
+        } else {
+            if (numberInPattern(pattern, i)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
 void removeWordsOfWrongLength(list<string> & wordList, int acceptableLength) {
     list<string>::iterator iter;
     iter = wordList.begin();
@@ -23,7 +51,6 @@ void removeWordsOfWrongLength(list<string> & wordList, int acceptableLength) {
         }
     }
 }
-
 
 int countWordsWithoutLetter(const list<string> & wordList, char letter) {
     list<string>::const_iterator iter;
