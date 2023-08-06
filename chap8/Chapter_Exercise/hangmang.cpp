@@ -13,6 +13,28 @@ using std::iterator;
 
 
 
+list<string> readWordFile(const char * filename) {
+    list<string> wordList;
+    ifstream wordFile(filename, ios::in);
+    if (!wordFile.is_open()) {
+        cout << "File open failed. \n";
+        return wordList;
+    }
+    char currentWord[30];
+    while (wordFile >> currentWord) {
+        if (strchr(currentWord, '\'') == 0) {
+            string temp(currentWord);
+            wordList.push_back(temp);
+        }
+    }
+    return wordList;
+}
+
+
+
 int main() {
+    const char FILE_NAME[] = "words.txt";
+    list<string> words = readWordFile(FILE_NAME);
+    for(auto i : words) cout << i << "\n";
     return 0;
 }
