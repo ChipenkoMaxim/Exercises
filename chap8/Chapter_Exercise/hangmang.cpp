@@ -13,6 +13,16 @@ using std::iterator;
 
 
 
+void displayList(const list<string>& wordList) {
+    list<string>::const_iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        cout << iter->c_str() << "\n";
+        iter++;
+    }
+}
+
+
 list<string> readWordFile(const char * filename) {
     list<string> wordList;
     ifstream wordFile(filename, ios::in);
@@ -31,10 +41,9 @@ list<string> readWordFile(const char * filename) {
 }
 
 
-
 int main() {
     const char FILE_NAME[] = "words.txt";
     list<string> words = readWordFile(FILE_NAME);
-    for(auto i : words) cout << i << "\n";
+    displayList(words);
     return 0;
 }
