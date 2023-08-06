@@ -11,6 +11,16 @@ using std::list;
 using std::iterator;
 #include <cstring>
 
+
+void displayGuessedLetters(bool letters[26]) {
+    cout << "Letters guessed: ";
+    for (int i = 0; i < 26; i++) {
+        if (letters[i]) cout << (char)('a' + i) << " ";
+    }
+    cout << "\n";
+}
+
+
 void removeWordsWithoutLetter(list<string> & wordList, char requiredLetter) {
     list<string>::const_iterator iter;
     iter = wordList.begin();
