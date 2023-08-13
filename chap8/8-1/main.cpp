@@ -169,23 +169,89 @@ list<string> reduceByPattern(list<string> words, char letter, list<int> reducedP
     return newWords;
 }
 
+bool isSymbolValidNumber(char symbol) {
+    return symbol > '0' && symbol <= '9';
+}
+
+
+void setUpLengthOfWordToGuess(int& wordLength) {
+    cout << "Enter length of word to guess in range from 1 to 9: ";
+    char promptedSymbol;
+    cin >> promptedSymbol;
+    while (!isSymbolValidNumber(promptedSymbol))
+    {
+        cout << "\nWrong value for length of word, try again: ";
+        cin >> promptedSymbol;
+    }
+    wordLength = promptedSymbol - '0';
+}
+
+
+void setUpMaxMissesAmount(int& maxMisses) {
+    cout << "Enter number of wrong attempts in range from 1 to 9: ";
+    char promptedSymbol;
+    cin >> promptedSymbol;
+    while (!isSymbolValidNumber(promptedSymbol))
+    {
+        cout << "\nWrong value for number of wrong attempts, try again: ";
+        cin >> promptedSymbol;
+    }
+    maxMisses = promptedSymbol - '0';
+}
+
+
+void displayNumberOfWrongGuesses(int missesTotal, int missesMax) {
+    cout << "Attempts to guess word: " << missesMax - missesTotal << "\n";
+}
+
 
 int main() {
     list<string> wordList = readWordFile("words.txt");
-    const int wordLength = 5;
-    const int maxMisses = 8;
-    int misses = 0;
-    int discoveredLetterCount = 0;
+
+    int wordLength;
+    setUpLengthOfWordToGuess(wordLength);
     removeWordsOfWrongLength(wordList, wordLength);
-    char revealedWord[wordLength + 1] = "*****";
+    if(wordList.empty()) {
+        cout << "There is no words of given length";
+        return 0;
+    }
+    //Initialize revealedWordSofar
+    char *revealedWord =  new char[wordLength + 1];
+    for(int i = 0; i < wordLength; i++) revealedWord[i] = '*';
+    revealedWord[wordLength] = '\0';
+
+    int maxMisses;
+    setUpMaxMissesAmount(maxMisses);
+    
+
+    //Initialize guessed letters
     bool guessedLetters[26];
     for (int i = 0; i < 26; i++) guessedLetters[i] = false;
-    char nextLetter;
-    cout << "Word so far: " << revealedWord << "\n";
 
+
+    //cout << "Word so far: " << revealedWord << "\n";
+    int misses = 0;
+    int discoveredLetterCount = 0;
     while (discoveredLetterCount < wordLength && misses < maxMisses) {
+        cout << "\n\nWord so far: " << revealedWord << "\n";
+        displayGuessedLetters(guessedLetters);
+        displayNumberOfWrongGuesses(misses, maxMisses);
         cout << "Letter to guess: ";
+        
+        //check prompted letter
+        //Check repeating letters
+        char nextLetter;
         cin >> nextLetter;
+        while (!(nextLetter >= 'a' && nextLetter <= 'z'))
+        {
+            cout << "Enter valid lower case symbol: ";
+            cin >> nextLetter;
+        }
+        
+        if(guessedLetters[nextLetter - 'a'] == true) {
+            cout << "Letter already guessed, try again\n";
+            continue;
+        }
         guessedLetters[nextLetter - 'a'] = true;
         int missingCount = countWordsWithoutLetter(wordList, nextLetter);
         list<int> nextPattern;
@@ -195,17 +261,19 @@ int main() {
             removeWordsWithLetter(wordList, nextLetter);
             misses++;
         } else {
+            
+            //RevealGuessedLetter function
             list<int>::iterator iter = nextPattern.begin();
             while (iter != nextPattern.end()) {
                 discoveredLetterCount++;
                 revealedWord[*iter] = nextLetter;
                 iter++;
             }
+            //Remove words that don't correspond pattern
             wordList = reduceByPattern(wordList, nextLetter, nextPattern);
         }
-        cout << "Word so far: " << revealedWord << "\n";
-        displayGuessedLetters(guessedLetters);
     }
+    //DeclareResult Function
     if (misses == maxMisses) {
         cout << "Sorry. You lost. The word I was thinking of was '";
         cout << (wordList.cbegin())->c_str() << "'.\n";
