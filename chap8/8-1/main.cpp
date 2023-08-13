@@ -160,9 +160,9 @@ list<string> reduceByPattern(list<string> words, char letter, list<int> reducedP
     while (iter != words.end())
     {
         if(matchesPattern(*iter, letter, reducedPattern)) {
-            //skip that word
-        } else {
             newWords.push_back(*iter);
+        } else {
+            //skip that word
         }
         iter++;
     }
@@ -206,6 +206,11 @@ int main() {
         cout << "Word so far: " << revealedWord << "\n";
         displayGuessedLetters(guessedLetters);
     }
-
+    if (misses == maxMisses) {
+        cout << "Sorry. You lost. The word I was thinking of was '";
+        cout << (wordList.cbegin())->c_str() << "'.\n";
+    } else {
+        cout << "Great job. You win. Word was '" << revealedWord << "'.\n";
+    }
     return 0;
 }
